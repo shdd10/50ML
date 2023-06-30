@@ -14,7 +14,14 @@ if __name__ == "__main__":
     chrome_options = Options()
     chrome_options.add_argument("--disable-extensions")
     chrome_options.add_argument("--headless")
-    driver = webdriver.Chrome(options=chrome_options, service=service)
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_prefs = {}
+    chrome_options.experimental_options["prefs"] = chrome_prefs
+    chrome_prefs["profile.default_content_settings"] = {"images": 2}
+
+
+    driver = webdriver.Chrome(options=chrome_options)
     driver.get(website)
     dropdown = Select(driver.find_element(By.ID, 'pa_volume'))
     dropdown.select_by_value('50-ml')
